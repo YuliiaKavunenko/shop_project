@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('shop.static', filename = 'css/shop.css') }}">
+    <script  src = "{{ url_for('shop.static', filename = 'js/shop.js') }}" defer>
+
+    </script>
+{% endblock style %}
+
+{% block title %}
+    Shop
+{% endblock %}
+
+{% block content %}
+    <h1>{{ name }}</h1>
+
+    <div class = "links">
+        <a href="/">HOME</a>
+        <a href="/shop/">SHOP</a>
+        <a href="/cart/">
+            <div class = "basket">
+                CART 
+                <div class = "bgcounter" id="basketcount" style="display: none;" >
+                    <p id = "counter">1</p>
+                </div>
+            </div>
+            
+        </a>
+        <a href="/contacts/">CONTACTS</a>
+        {% if is_admin == 'admin' %}
+            <a href="/adminshop/">ADMIN</a>
+        {% endif %}
+    </div>
+<!-- ☨ -->
+    <div class = 'link_space'>
+
+    </div>
+    {% for products in product %}
+    <div class = 'content'>
+        <div class = "product">
+            <img src="/../static/shopPage/img/{{ products.image }}" alt="НЕМАЭ ЗОБРАЖЕННЯ0">
+            <div class="product_content">
+                <h2>{{ products.name }}</h2>
+                <h2 id="price">{{ products.price }} грн</h2>
+                <h2 id = 'discount'>ЗНИЖКА {{ products.discount }}%</h2>
+                <h2>{{  products.price - (products.price / 100 * products.discount) }} грн</h2>
+                <form method = "post">
+                    <button type="submit" class = "buy_button" id="{{ products.id }}" {% if products.count == 0 %}disabled{% endif %}>КУПИТИ</button>
+                </form>
+                <h3>{{ products.description }}</h3>
+                <div class="КНОПКИ">
+                    <form method="post">
+                        {% for memory in products.memory.split(",") %}
+                            <button type="submit" {% if products.count == 0 %}disabled{% endif %}>{{ memory }}</button>
+                        {% endfor %}
+                    </form>
+                    
+                </div>
+                <div class="vnayavnosti">
+                    
+                    {% if products.count > 0 %}
+                    <div class = 'confirm'><p>✓</p></div>
+                    <p>ТОВАР В НАЯВНОСТІ</p>
+
+                    {% else %}
+                        <div class = 'notconfirm'></div>
+                        <p id="notconfirmtext">НЕ В НАЯВНОСТІ</p>
+
+                    {% endif %}
+                    
+
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+        
+        
+    {% endfor %}
+    
+
+{% endblock %}

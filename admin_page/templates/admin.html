@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Admin Shop
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/admin.css') }}">
+    <script src = "{{ url_for('admin.static', filename = 'js/admin.js') }}" defer>
+
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    <!-- <form class="form" method="post" enctype="multipart/form-data">
+        <input type="text" name="name">
+
+    </form> -->
+    <h1>{{ name }}</h1>
+
+    <div class = "links">
+        <a href="/">HOME</a>
+        <a href="/shop/">SHOP</a>
+        <a href="/cart/">
+            <div class = "basket">
+                CART 
+                <div class = "bgcounter" id="basketcount" style="display: none;" >
+                    <p id = "counter">1</p>
+                </div>
+            </div>
+
+        </a>
+        <a href="/contacts/">CONTACTS</a>
+        
+        {% if is_admin == 'admin' %}
+            <a href="/adminshop/">ADMIN</a>
+        {% endif %}
+
+    </div>
+<!-- ☨ -->
+
+    <form method="post" class="add_form">
+        <p>ДОДАТИ ПРОДУКТ</p>
+        <button class="add_button" name="add_button">+</button>
+    </form>
+
+    <div class="background_modal1" style="display: none;">
+        <div class="modal1">
+            <form method="post" enctype="multipart/form-data" class="ZVOOZVOZVOZOVOZVOZXVO">
+                <h4>NEW PRODUCT</h4>
+                <h2>IMAGE PRODUCT:</h2>
+                <input type="file" accept="image/*" name="image">
+                <h2>NAME PRODUCT:</h2>
+                <input type="text" name="name">
+                <H2>DESCRIPTION PRODUCT:</H2>
+                <textarea name="description" ></textarea>
+                <h2>PRICE PRODUCT:</h2>
+                <input type="number" name="price">
+                <h2>DISCOUNT PRODUCT:</h2>
+                <input type="number" name="discount">
+                <h2>COUNT PRODUCT:</h2>
+                <input type="number" name="count">
+                <h2>MEMORY PRODUCT:</h2>
+                <input type="text" name="memory">
+                <button>SEND</button>
+            </form>
+
+        </div>
+    </div>
+
+    {% for products in product %}
+    <div class = 'content'>
+        <div class = "product">
+            <!-- 1 -->
+            <div id="edit_image">
+                <img src="/../static/shopPage/img/{{ products.image }}" alt="НЕМАЭ ЗОБРАЖЕННЯ0">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="product_id"  value="{{ products.id }}">
+                    <button class = "edit" id = 'edit-image-{{ products.id }}'>
+                        <img src="{{ url_for('admin.static', filename = 'img/pencil.png') }}" alt="">
+                    </button>
+                    <div class = "background_modal">
+                        <div id = "modal-image-{{ products.id }}" class = "modal" style = "display: none;">
+                            <p>CHANGE IMAGE:</p>
+                            <input type="file" name="new_image" accept="image/*" value="{{ products.name }}" id = "input-image-{{ products.id }}" style = "display: none;"">
+
+                            <button class = 'save' id = 'save-image-{{ products.id }}' style = "display: none;">
+                                SEND
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            
+            </div>
+            
+            <div class="product_content">
+                <div id="edit_name">
+                    <h2 id = 'name-{{ products.id }}'>{{ products.name }}</h2>
+                    
+                   
+
+                    <form method="post">
+                        <input type="hidden" name = "product_id" value = "{{ products.id }}">
+                        <button class="edit" id = 'edit-name-{{ products.id }}'>
+                            <img src="{{ url_for('admin.static', filename = 'img/pencil.png') }}" alt="">
+                        </button>
+                        <div class = "background_modal">
+                            <div id = "modal-name-{{ products.id }}" class = "modal" style = "display: none;">
+                                <p>CHANGE NAME:</p>
+                                <input type="text" name="new_name" value="{{ products.name }}" id="input-name-{{ products.id }}" style = "display: none;">
+                                <button class = 'save' id = 'save-name-{{ products.id }}' style = "display: none;">
+                                    SEND
+                                </button>
+                            </div> 
+                        </div>
+
+                    </form>
+                </div>
+
+                <div id="edit_price">
+                    <h2 id="price">{{ products.price }} грн</h2>
+                    
+                    <form method="post">
+                        <input type="hidden" name = "product_id" value = "{{ products.id }}">
+                        <button class="edit" id = 'edit-price-{{ products.id }}'>
+                            <img src="{{ url_for('admin.static', filename = 'img/pencil.png') }}" alt="">
+                        </button>
+                        <div class = "background_modal">
+                            <div id = "modal-price-{{ products.id }}" class = "modal" style = "display: none;">
+                                <p>CHANGE PRICE:</p>
+                                <input type="text" name="new_price" value="{{ products.price }}" id="input-price-{{ products.id }}" style = "display: none;">
+                                <button class = 'save' id = 'save-price-{{ products.id }}' style = "display: none;">
+                                    SEND
+                                </button>
+                            </div> 
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <div id="edit_discount">
+                    <h2 id="discount">ЗНИЖКА {{ products.discount }}%</h2>
+                    
+                    <form method="post">
+                        <input type="hidden" name = "product_id" value = "{{ products.id }}">
+                        <button class="edit" id = 'edit-discount-{{ products.id }}'>
+                            <img src="{{ url_for('admin.static', filename = 'img/pencil.png') }}" alt="">
+                        </button>
+                        <div class = "background_modal">
+                            <div id = "modal-discount-{{ products.id }}" class = "modal" style = "display: none;">
+                                <p>CHANGE DISCOUNT:</p>
+                                <input type="text" name="new_discount" value="{{ products.discount }}" id="input-discount-{{ products.id }}" style = "display: none;">
+                                <button class = 'save' id = 'save-discount-{{ products.id }}' style = "display: none;">
+                                    SEND
+                                </button>
+                            </div> 
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <!-- НЕТРОГАТЬ -->
+                <h2>{{  products.price - (products.price / 100 * products.discount) }} грн</h2>
+                
+
+
+                <!-- НЕТРОГАТЬ -->
+                <form method = "post">
+                    <button type="submit" class = "buy_button" id="{{ products.id }}" {% if products.count == 0 %}disabled{% endif %}>КУПИТИ</button>
+                </form>
+
+
+
+                <h3>{{ products.description }}</h3>
+                
+
+
+
+                <div class="КНОПКИ">
+
+
+                        {% for memory in products.memory.split(",") %}
+                        <form method="post">
+                            <button class = 'memory' type="submit" {% if products.count == 0 %}disabled{% endif %} id = "memory-{{ loop.index0 }}-{{ products.id }}">{{ memory }}</button>
+                            <input type="hidden" name = "index_button_{{ products.id }}" value = "{{ loop.index0 }}">
+                            <input type="hidden" name = "product_id" value = "{{ products.id }}">
+
+                            <button name="edit" class="edit" id = 'edit-memory-{{ products.id }}-{{ loop.index0 }}'>
+                                <img src="{{ url_for('admin.static', filename = 'img/pencil.png') }}" alt="">
+                            </button>
+                            <div class = "background_modal">
+                                <div id = "modal-memory-{{ products.id }}" class = "modal" style = "display: none;">
+                                    <p>CHANGE MEMORY:</p>
+                                    <input type="text" name="new_memory" value="{{ products.memory }}" id="input-memory-{{ products.id }}" style = "display: none;">
+                                    <button class = 'save' id = 'save-memory-{{ products.id }}' style = "display: none;">
+                                        SEND
+                                    </button>
+                                </div> 
+                            </div>
+
+                        </form>
+                        {% endfor %}
+                    
+                    
+                </div>
+
+
+
+                <form method="post" class="delete">
+                    <input type="hidden" name="delete_product_id" value="{{ products.id }}">
+                    <button class="delete-button" id="delete-button-{{ products.id }}">
+                        <img src="{{ url_for('admin.static', filename = 'img/bin.png') }}" alt="" style="width: 31px; height: 37px;">
+                        <p>ВИДАЛИТИ ТОВАР</p>
+                    </button>
+                </form>
+                
+                
+            </div>
+            
+
+        </div>
+    </div>
+        
+        
+    {% endfor %}
+
+
+
+{% endblock %}

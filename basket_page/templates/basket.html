@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('basket.static', filename = 'css/basket.css') }}">
+    <script src="{{ url_for('basket.static', filename = 'js/basket.js') }}" defer></script>
+{% endblock style %}
+
+{% block title %}
+    Basket
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ name }}</h1>
+
+    <div class = "links">
+        <a href="/">HOME</a>
+        <a href="/shop/">SHOP</a>
+        <a href="/cart/">
+            <div class = "basket">
+                CART 
+                <div class = "bgcounter" style="display: none;" id = 'basketcount' >
+                    <p id = "counter" >1</p>
+                </div>
+            </div>
+        </a>
+        <a href="/contacts/">CONTACTS</a>
+        {% if is_admin == 'admin' %}
+            <a href="/adminshop/">ADMIN</a>
+        {% endif %}
+    </div>
+
+
+
+    {% if products != "" %}
+
+    <div id="basket_content" class="{% if user_order_status == 'wait_accept' %}basket_content_column{% else %}basket_content_row{% endif %}">
+        {% if user_order_status == "wait_accept" %}
+        <div class="acceptText">
+             <h3>ВАШІ ДАНІ У ОБРОБЦІ</h3>
+             <h3>КОНСУЛЬТАНТ ЗВ'ЯЖЕТЬСЯ З ВАМИ ДЛЯ ПІДТВЕРДЖЕННЯ ЗАМОВЛЕННЯ</h3>
+        </div> 
+     {% endif %}
+        <div class="content">
+            {% for product in products %}
+                <div class="product_content">
+                    <img src="/../static/shopPage/img/{{ product.image }}" alt="not found">
+                    
+                    <div class="product">
+
+                        <div class="product_text">
+                            <h2 id="product_name">{{ product.name }}</h2>
+                            <div class="amount">
+                                <form method="post">
+                                    <button class="{% if user_order_status == 'wait_accept' %}minus_count_none{% else %}minus_count{% endif %}" id="{{ product.id }}">-</button>
+                                </form>
+                                <h2 class="{% if user_order_status == 'wait_accept' %}count_in_basket_fixed{% else %}count_in_basket{% endif %}">1</h2>
+                                <form method="post">
+                                    <button class="{% if user_order_status == 'wait_accept' %}plus_count_none{% else %}plus_count{% endif %}" id="{{ product.id }}">+</button>
+                                </form>
+
+                            </div>
+                            <input type="hidden" name="discount" id="discount-{{ product.id }}" value="{{ product.discount }}">
+                            <h2 class="product_price">{{ product.price }} грн</h2> 
+                        </div>
+                        <form method="post" class="bin">
+                            <button class="bin_button"><img src="/../static/basketPage/img/bin.png" alt=""></button>
+                        </form>
+                    </div>
+                </div>
+                
+
+            {% endfor %}
+            </div>
+            <div class="{% if user_order_status == 'wait_accept' %}чекаємо_оформлення{% else %}оформити{% endif %}">
+                <form method="post">
+                    <button class="{% if user_order_status == 'wait_accept' %}order_wait{% else %}order{% endif %}" >{% if user_order_status == 'wait_accept' %}ВІДМІНИТИ ЗАМОВЛЕННЯ{% else %}ПЕРЕЙТИ ДО ОФОРМЛЕННЯ{% endif %}</button>
+                </form>
+                <div class="{% if user_order_status == 'wait_accept' %}info_order_none{% else %}info_order{% endif %}">
+                    <h3>4-и товари на суму</h3>
+                    <h2>133 997 грн</h2>
+                </div>
+                
+
+                <div class="{% if user_order_status == 'wait_accept' %}sale_none{% else %}sale{% endif %}">
+                    <h3>Знижка</h3>
+                    <h2>25 459 грн</h2>
+                </div>
+                
+                
+                <div class="total_sum">
+                    <h3>Загальна сума</h3>
+                    <h2>108 538 грн</h2>
+                </div>
+                
+            </div>
+            <div class = "background_form">
+                <form method = "post" class = "make_order">
+                    <h3>ОФОРМЛЕННЯ ЗАМОВЛЕННЯ:</h3>
+                    <h4>ІМ'Я</h4>
+                    <input type="text" name = "name" value="">
+                    <h4>ПРІЗВИЩЕ:</h4>
+                    <input type="text" name = "surname" value="">
+                    <h4>ТЕЛЕФОН ЗАМОВНИКА:</h4>
+                    <input type="text" name = "phone_number" value="">
+                    <h4>EMAIL ЗАМОВНИКА:</h4>
+                    <input type="text" name = "email" value="">
+                    <h4>МІСТО ОТРИМУВАЧА:</h4>
+                    <input type="text" name = "city" value="">
+                    <h4>ВІДДІЛЕННЯ НОВОЇ ПОШТИ:</h4>
+                    <input type="text" name = "nova_poshta" value="">
+                    <h4>ДОДАТКОВІ ПОБАЖАННЯ:</h4>
+                    <textarea type="text" name = "extra_info" value=""></textarea>
+    
+                    <button type = 'submit' id = "send_order">SEND</button>
+                </form>
+            </div>
+            
+        {% else %}
+            <p>CART IS EMPTY</p>
+        {% endif %}
+    </div>
+        
+{% endblock %}

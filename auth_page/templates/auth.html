@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename = 'css/auth.css') }}">
+    <script src = "{{ url_for('auth.static', filename = 'js/auth.js') }}" defer></script>
+{% endblock style %}
+
+{% block title %}
+    Authorization
+{% endblock %}
+
+{% block content %}
+
+    <a href="/authorization/" id = "authorization">AUTHORIZATION</a>
+    
+
+    <div class="background"></div>
+
+    <form method = "post" id = "auth_content">
+        <p>Login or email</p>
+        <input type="text" name = "login">
+        <p>Password</p>
+        <input type="password" name = "password">
+        <button id = "auth_button">SEND</button>
+    </form>
+    {% if error == True %}
+        <div class = "modal" id = "modal_window">
+            <div style="display: flex;" class = "modal_content">
+
+                <p>YOU ARE NOT REGISTERED</p>
+                <a id = "close" href="/registration/">
+                    → REGISTRATION
+                </a>
+                <!-- <a href="/">→ HOME</a> -->
+                
+            </div>
+        </div>
+    {% elif error == False %}
+        <script>
+            window.onload() = function(){
+                var modal = document.getElementById("modal_window");
+                modal.style.display = "none";
+                
+            }
+        </script>
+    {% endif %}
+
+
+
+{% endblock %}

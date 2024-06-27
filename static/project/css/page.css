@@ -1,0 +1,21 @@
+body{
+    background-color:#ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+  }
+
+.links{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+}
+.links a{
+  font-family: 'Inter', sans-serif;
+  color: black;
+  font-size: 28;
+  margin: 40px;
+}

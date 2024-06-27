@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('contact.static', filename = 'css/contact.css') }}">
+    <script  src = "{{ url_for('contact.static', filename = 'js/contact.js') }}" defer></script>
+{% endblock %}
+
+{% block title %}
+
+
+{% endblock %}
+
+{% block content %}
+    <h1>{{ name }}</h1>
+
+
+    <p>Contacts</p>
+    <div class = "links">
+        <a href="/">HOME</a>
+        <a href="/shop/">SHOP</a>
+        <a href="/cart/">
+            <div class = "basket">
+                CART 
+                <div class = "bgcounter" style="display: none;" id = 'basketcount' >
+                    <p id = "counter" >1</p>
+                </div>
+            </div>
+        </a>
+        <a href="/contacts/">CONTACTS</a>
+        {% if is_admin == 'admin' %}
+            <a href="/adminshop/">ADMIN</a>
+        {% endif %}
+    </div>
+{% endblock %}
+

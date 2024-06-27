@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}  {% endblock %} </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/page.css') }}">
+    {% block style %}
+
+    {% endblock style %}
+</head>
+<body>
+    <h1>{{ name }}</h1>
+
+    {% if name == "" %}
+        <div class = "linkblock">
+            <a href="/registration/">REGISTRATION</a>
+            <a href="/authorization/">AUTHORIZATION</a>
+
+        </div>
+
+
+    {% endif %}
+
+    {% block content %} 
+         
+    {% endblock %}
+</body>
+</html>
