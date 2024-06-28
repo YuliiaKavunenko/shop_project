@@ -143,7 +143,7 @@ from project.settings import shop as application  # тут импортуйте 
 
 ## Структура проєкту
 ```mermaid
-%%{ init : { "theme" : "default", "flowchart" : { "curve" : "linear" } }}%%
+%%{ init : { "theme" : "forest", "flowchart" : { "curve" : "basis" }, "themeVariables": { "fontFamily": "Nunito" } }}%%
 
 flowchart LR
 
