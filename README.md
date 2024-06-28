@@ -40,7 +40,7 @@
 ```
 #### *ВАЖЛИВО!!! Файл js потрібно підключати в `<head>`, або у блоці, що був створений у шаблоні для тега `<head>`*
 
-### Демоверсія проєкту...
+### [Демоверсія проєкту](https://yuliiakavunenko.pythonanywhere.com/)
 
 ## Наш проєкт - корисний
 
@@ -1502,38 +1502,386 @@ def render_admin():
 ## JavaScript!
 ### Registration page:
 ```js
-pass
+var modal = document.getElementById("firstModal")
+var button = document.getElementById("sendbutton")
+var span = document.getElementById("linkreg")
+
+// При натисканні на кнопку для надсилання данних для реєстрації відображається модальне вікно
+button.addEventListener('click',function(event){
+    event.preventDefault()
+    modal.style.display = "block"
+})
+// При натисканні на місце за модальним вікном автоматично надсилаються дані і POST запрос
+window.addEventListener('click', function(event){
+    if(event.target == modal){
+        modal.style.display = "none"
+        document.getElementById("reg_content").submit()
+    }
+})
+// При натисканні на кнопку для переходу на сайт авторизації модальне вікно знакає і відбувається POST запрос
+span.addEventListener('click', function(){
+    modal.style.display = "block"
+    document.getElementById("reg_content").submit()
+})
+
 ```
 #### У данному коді ви можете побачити роботу модального вікна при успішній реєстрації
 ### Authorization page:
 ```js
-pass
+var modal = document.getElementById("modal_window")
+var button = document.getElementById("auth_button")
+var span = document.getElementById("close")
+// При натисканні на ссилку для переходу на сайт реєстрації зникає модальне вікно
+span.addEventListener('click', function(){
+    modal.style.display = "none"
+    document.getElementById("auth_content").submit()
+})
+// При натисканні на кнопку відправки данних для авторизації з'являється наше модальне вікно
+button.addEventListener('click', function(event){
+    modal.style.display = "block"
+    event.preventDefault()
+})
 ```
 #### У данному коді ви можете побачити роботу модального вікна, якщо користувач не зареєстрований
 ### Home page:
 ```js
-pass
+const list_buttons = document.querySelectorAll(".buy_button")
+const counts = document.querySelector("#basketcount")
+// Функція для відображення кількості товарів у кошику
+function updatecount(){
+    var count = 0
+    // Якщо товари присутні (або якщо є cookie файли), то підраховувати кількість товарів у кошику
+    if (document.cookie != ""){
+        var products = document.cookie.split("=")[1].split(" ")
+        for (var i = 0; i < products.length; i++){
+            if (products[i] != ""){
+                count++
+            }
+        }
+    }
+    counts.textContent = count
+    // Якщо товарів у кошику немає (або якщо немає cookie), то приховувати лічильник товарів 
+    counts.style.display = count > 0 ? "flex":"none"
+}
+updatecount()
 ```
 #### У данному коді ви можете побачити роботу лічильника для кошика
 ### Shop page:
 ```js
-pass
+const list_buttons = document.querySelectorAll(".buy_button")
+const counts = document.querySelector("#basketcount")
+
+// Функція для відображення кількості товарів у кошику
+function updatecount(){
+    var count = 0
+    // Якщо товари присутні (або якщо є cookie файли), то підраховувати кількість товарів у кошику
+    if (document.cookie != ""){
+        var products = document.cookie.split("=")[1].split(" ")
+        for (var i = 0; i < products.length; i++){
+            if (products[i] != ""){
+                count++
+            }
+        }
+    }
+    counts.textContent = count
+    // Якщо товарів у кошику немає (або якщо немає cookie), то приховувати лічильник товарів 
+    counts.style.display = count > 0 ? "flex":"none"
+}
+// При натисканні на кнопку "Купити" додаюься данні id продукту до cookie файлу з назвою "product"
+for (let i = 0; i < list_buttons.length; i++){
+    let button = list_buttons[i] 
+    button.addEventListener(
+        'click',
+        function(event){
+            event.preventDefault()
+            if (document.cookie == ''){
+                document.cookie = `product = ${button.id}; path = /`
+            }else{
+                let productId = document.cookie.split('=')[1]
+                document.cookie = `product = ${productId} ${button.id}; path = /`
+            }
+            updatecount()
+        }
+    )
+}
+
+var products = document.querySelectorAll(".content")
+// При натисканні на кнопки параметрів змінюємо їх колір фона на жовтий колір
+products.forEach(function(product){
+    var buttons = product.querySelectorAll(".КНОПКИ button")
+    buttons.forEach(function(button){
+        button.addEventListener("click", function(event){
+            event.preventDefault()
+            buttons.forEach(function(one_button){
+                one_button.style.backgroundColor = "white"
+            })
+            this.style.backgroundColor = "#EFCB4A"
+        })
+    })
+})
+updatecount()
 ```
 #### У данному коді ви можете побачити, як взаємодіє кнопка "купити" з лічильником кошика
 ### Cart page:
 ```js
-pass
+const counts = document.querySelector("#basketcount")
+const bin_button = document.querySelectorAll(".bin_button")   
+
+// Функція для відображення кількості товарів у кошику
+function updatecount(){
+    var count = 0
+    // Якщо товари присутні (або якщо є cookie файли), то підраховувати кількість товарів у кошику
+    if (document.cookie != ""){
+        var products = document.cookie.split("=")[1].split(" ")
+        for (var i = 0; i < products.length; i++){
+            if (products[i] != ""){
+                count++
+            }
+        }
+    }
+    counts.textContent = count
+    // Якщо товарів у кошику немає (або якщо немає cookie), то приховувати лічильник товарів 
+    counts.style.display = count > 0 ? "flex":"none"
+}
+
+if (document.cookie == ""){
+    counts.style.display = "None"
+}else{
+    updatecount()
+}
+
+// При натисканні на кнопку "-" продукта видаляється один елемент id з файлу cookie і змінюється значення лічильника біля кошика і у самому кошику
+document.querySelectorAll(".minus_count").forEach(function(button){
+    button.addEventListener("click", function(event){
+        event.preventDefault()
+
+        var get_id_button = this.id
+
+        var products = document.cookie.split("=")[1].split(" ")
+        var index = products.indexOf(get_id_button)
+        if (index > -1){
+            products.splice(index, 1)
+        }
+        document.cookie = `product = ${products.join(" ")}; path = /`
+        if (products.indexOf(get_id_button) == -1){
+            button.closest(".product_content").remove()
+        }
+
+
+        button.closest(".product_text").querySelector(".count_in_basket").innerText = products.filter(id => id == get_id_button).length
+        updatecount()
+        })
+})
+
+// При натисканні на кнопку "+" продукта додається один елемент id з файлу cookie і змінюється значення лічильника біля кошика і у самому кошику
+document.querySelectorAll(".plus_count").forEach(function(button){
+    button.addEventListener("click", function(event){
+        event.preventDefault()
+
+        var get_id_button = this.id
+
+        var products = document.cookie.split("=")[1]
+        document.cookie = `product = ${products} ${get_id_button}; path = /`
+
+        button.closest(".product_text").querySelector(".count_in_basket").innerText = (products.match(new RegExp(get_id_button, 'g' ))|| []).length +1
+
+        updatecount()
+        })
+})
+// Відувається зміна лічильника у кошику
+document.querySelectorAll(".product_text").forEach(function(product){
+    var minusCount = product.querySelector(".minus_count")
+    if (minusCount != null){
+        var productId = minusCount.id
+    }else{
+        var productId = product.querySelector(".minus_count_none").id
+    }
+    
+    var products = document.cookie.split('=')[1]
+    var countBasket = product.querySelector(".count_in_basket")
+    if(countBasket != null){
+        countBasket.innerText =  (products.match(new RegExp(productId, 'g' ))|| []).length
+    }else{
+        product.querySelector(".count_in_basket_fixed").innerText =  (products.match(new RegExp(productId, 'g' ))|| []).length
+    }
+    
+});
+
+// Функція для отримання сумми товару і його відсотка знижки для остаточного підрахунку суми усіх товарів у кошику з знижкою, 
+// суми загальної знижки і загальної суми без знижки 
+function update_discount_and_total(){
+        var totalSum = 0
+        var totalDiscount = 0
+        var count = null
+        var productId = null
+        document.querySelectorAll('.product_content').forEach(function(product){
+            var price = parseFloat(product.querySelector('.product_price').innerText)
+            var countData = product.querySelector('.count_in_basket')
+            if (countData != null){
+                count = parseInt(countData.innerText)
+            } else{
+                count = parseInt(product.querySelector('.count_in_basket_fixed').innerText)
+            }
+            var minusCountData = product.querySelector(".minus_count")
+            if(minusCountData != null){
+                var productId = minusCountData.id
+            }else{
+                var productId = product.querySelector(".minus_count_none").id
+            }
+            
+
+            var discount = document.querySelector("#discount-" + productId).value
+            var productCount = count * price
+            var discount_sum = Math.round(productCount * discount / 100) // скидка для каждого товара
+            totalSum += productCount
+            totalDiscount += discount_sum // суммируем скидки
+        })
+        var totalSumDiscount = totalSum - totalDiscount // общая сумма со скидкой
+        var infoOrder = document.querySelector(".info_order h2")
+        var saleData = document.querySelector(".sale h2")
+        var totalSumData = document.querySelector(".total_sum h2")
+        console.log(infoOrder)
+        if (infoOrder != null){
+            document.querySelector(".info_order h2").innerText = totalSum + "грн"
+        }else{
+            document.querySelector(".info_order_none h2").innerText = totalSum + "грн"
+        }
+        if(saleData != null){
+            saleData.innerText = totalDiscount + "грн"
+        }else{
+            document.querySelector(".sale_none h2").innerText = totalDiscount + "грн"
+        }        
+        if(totalSumData != null){
+            totalSumData.innerText = totalSumDiscount + "грн" 
+        }else{
+            document.querySelector(".total_sum_none h2").innerText = totalSumDiscount + "грн" 
+        }
+
+        
+        
+}
+    
+update_discount_and_total()
+// При натисканні на кнопку "-" чи "+" відбувається перерахунок лічільника біля кошика
+document.querySelectorAll(".minus_count, .plus_count").forEach(function(button){
+    button.addEventListener("click", function(event){
+        update_discount_and_total()
+    })
+})
+// При натисканні на кнопку видалення товару отримуємо id цього товару і фільтруємо данні файлу cookie з видаленням усіх таких же id 
+bin_button.forEach(function(button){
+    button.addEventListener("click", function(event){
+        event.preventDefault()
+        var product_id = this.closest(".product_content").querySelector(".minus_count").id 
+
+        var product = document.cookie.split("=")[1].split(" ")
+        product = product.filter(id => id != product_id)
+        document.cookie = `product = ${product.join(" ")}; path = /`
+        this.closest(".product_content").remove()
+        updatecount()
+        update_discount_and_total()
+    })
+})
+// Якщо натискаємо на кнопку оформлення замовлення, то відображаємо форму для оформлення
+var formWindow = document.querySelector(".make_order")
+var orderButton = document.querySelector(".order")
+if(orderButton != null){
+    orderButton.addEventListener("click", function(event){
+        event.preventDefault()
+        console.log('нажатие')
+        formWindow.parentElement.style.display = "flex"
+        
+    })
+}else{
+    // Якщо натискаємо на кнопку "Відмовити замовлення", то сторінка оновлюється і повертається стиль сторінки
+    console.log('відмовити?')
+}
 ```
 #### У данному коді ви можете побачити роботу збільшення і зменьшення товару, а також відображення модального вікна. Також підрахунок суми, суми з знижкою і суми без знижки і роботу лічильника кошика
 ### Contacts page:
 ```js
-pass
+const list_buttons = document.querySelectorAll(".buy_button")
+const counts = document.querySelector("#basketcount")
+// Функція для відображення кількості товарів у кошику
+function updatecount(){
+    var count = 0
+    // Якщо товари присутні (або якщо є cookie файли), то підраховувати кількість товарів у кошику
+    if (document.cookie != ""){
+        var products = document.cookie.split("=")[1].split(" ")
+        for (var i = 0; i < products.length; i++){
+            if (products[i] != ""){
+                count++
+            }
+        }
+    }
+    counts.textContent = count
+    // Якщо товарів у кошику немає (або якщо немає cookie), то приховувати лічильник товарів 
+    counts.style.display = count > 0 ? "flex":"none"
+}
+updatecount()
 ```
 #### У данному коді ви можете побачити роботу лічильника для кошика
 ### Admin page:
 ```js
-pass
+// При натисканні на кнопку редагування товару отримуємо id товару і що саме ми редагуємо
+document.querySelectorAll(".edit").forEach(function(button){
+    // Додаємо функцію до кожної кнопки редагування
+    button.addEventListener("click", function(event){
+
+        event.preventDefault()
+        // Отримуємо данні частини, що редагуємо
+        var parts = this.id.split('-')
+        // Отримуємо ім'я частини продукту, що потрібно редагувати
+        var part_name = parts[1]
+        // Отримуємо id продукту
+        var product_id = parts[2]
+        // Якщо редагуємо параметри пам'яті
+        if(part_name == "memory"){
+            // Спочатку отримуємо індекс кнопки, що редагуємо
+            var buttonIndex = this.id.split('-')[3]
+            // Встановлюємо значення індексу для views.py
+            document.querySelector("input[name = index_button_" + product_id + "]").value = buttonIndex
+
+            // Відображаємо необхідне модальне вікно, кнопку редагування з полем для введення данних і необхідний текст
+            document.querySelector("#modal-" + part_name + "-" + product_id).parentElement.style.display = "block"
+            document.querySelector("#modal-" + part_name + "-" + product_id).style.display = "block"
+            document.querySelector("#save-" + part_name + "-" + product_id).style.display = "block"
+            document.querySelector("#input-" + part_name + "-" + product_id).value = document.querySelector("#memory-" + buttonIndex + "-" + product_id).innerText
+            document.querySelector("#input-" + part_name + "-" + product_id).style.display= "block"
+
+            
+        }else{
+            // Відображаємо необхідне модальне вікно, кнопку редагування з полем для введення данних і необхідний текст
+            document.querySelector("#modal-" + part_name + "-" + product_id).parentElement.style.display = "block"
+            document.querySelector("#modal-" + part_name + "-" + product_id).style.display = "block"
+            document.querySelector("#save-" + part_name + "-" + product_id).style.display = "block"
+            document.querySelector("#input-" + part_name + "-" + product_id).style.display= "block"        
+        }
+
+
+    })
+})
+
+let add_button = document.querySelector(".add_button")
+// По натисканню кнопки "Додати продукт" відображаємо модальне вікно для отримання данних
+add_button.addEventListener("click", function(event){
+    event.preventDefault()
+    let add_modal = document.querySelector(".modal1")
+    add_modal.style.display = "block"
+    add_modal.parentElement.style.display = "block"
+})
+
+// При натисканні на кнопки "Видалення товару" видаляємо товар по його id і з самої сторінки
+document.querySelectorAll('.delete-dutton').forEach(function(button){
+    button.addEventListener('click',function(event){
+        event.preventDefault()
+
+        var id = this.id.split('-')[2]
+
+        this.closest(".product").remove()
+    })
+})
 ```
 #### У данному коді ви можете побачити роботу відображення усіх модальних вікон при натисканні на відповідну кнопку
 ## Висновок
-### Завдяки роботі над даним проєктом набули нових навичок у роботі з фреймворком flask і такими його розширеннями, як flask_mail, flask_login, flask_migrate і flask_sqlalchemy. Також покращили знання стосовно роботи з файлами excel, базою данних sqlite3 і такими мовами, як html, python, css. Окрім цього навчилися працювати з новою для нас мовою JavaScript. Отже, загалом можна сказати, що ми дізналися багато нового і корисного для нас.
+### Завдяки роботі над даним проєктом набули нових навичок у роботі з фреймворком flask і такими його розширеннями, як flask_mail, flask_login, flask_migrate і flask_sqlalchemy. Також покращили знання стосовно роботи з файлами excel, базою данних sqlite3 і такими мовами, як html, python, css. Окрім цього навчилися працювати з новою для нас мовою JavaScript. Отже загалом можна сказати, що ми дізналися багато нового і корисного для нас.
