@@ -142,8 +142,168 @@ from project.settings import shop as application  # тут импортуйте 
 
 
 ## Структура проєкту
+```mermaid
+%%{ init : { "theme" : "default", "flowchart" : { "curve" : "linear" } }}%%
 
-картинка структуры
+flowchart LR
+
+    A(ShopProject) --> L(admin_page)
+    A(ShopProject) --> K(auth_page)
+    A(ShopProject) --> J(basket_page)
+    A(ShopProject) --> I(BotShop)
+    A(ShopProject) --> P(contact_page)
+    A(ShopProject) --> H(home_page)
+    A(ShopProject) --> G(project)
+    A(ShopProject) --> F(reg_page)
+    A(ShopProject) --> E(shop_page)
+    A(ShopProject) --> D(static)
+    A(ShopProject) --> B([manage.py])
+
+
+    DA(static dummy):::hidden --> DB(adminPage)
+    DA(static dummy):::hidden --> DC(authPage)
+    DA(static dummy):::hidden --> DD(basketPage)
+    DA(static dummy):::hidden --> DE(contactPage)
+    DA(static dummy):::hidden --> DF(homePage)
+    DA(static dummy):::hidden --> DG(project)
+    DA(static dummy):::hidden --> DH(regPage)
+    DA(static dummy):::hidden --> DI(shopPage)
+
+    DB(adminPage) --> DBA(css)
+    DBA(css) --> DBAA([admin.css])
+    DB(adminPage) --> DBB(img)
+    DB(adminPage) --> DBC(js)
+    DBC(js) --> DBCA([admin.js])
+
+    DC(authPage) --> DCA(css)
+    DCA(css) --> DCAA([auth.css])
+    DC(authPage) --> DCB(img)
+    DC(authPage) --> DCC(js)
+    DCC(js) --> DCCA([auth.js])
+
+    DD(basketPage) --> DDA(css)
+    DDA(css) --> DDAA([basket.css])
+    DD(basketPage) --> DDB(img)
+    DD(basketPage) --> DDC(js)
+    DDC(js) --> DDCA([basket.js])
+
+    DE(contactPage) --> DEA(css)
+    DEA(css) --> DEAA([contact.css])
+    DE(contactPage) --> DEB(img)
+    DE(contactPage) --> DEC(js)
+    DEC(js) --> DECA([contact.js])
+
+    DF(homePage) --> DFA(css)
+    DFA(css) --> DFAA([home.css])
+    DF(homePage) --> DFB(img)
+    DF(homePage) --> DFC(js)
+    DFC(js) --> DFCA([home.js])
+
+    DG(project) --> DGA(css)
+    DGA(css) --> DGAA([page.css])
+    DG(project) --> DGB(img)
+    DG(project) --> DGC(js)
+
+    DH(regPage) --> DHA(css)
+    DHA(css) --> DHAA([reg.css])
+    DH(regPage) --> DHB(img)
+    DH(regPage) --> DHC(js)
+    DHC(js)  --> DHCA(reg.js)
+
+    DI(shopPage) --> DIA(css)
+    DIA(css) --> DIAA([shop.css])
+    DI(shopPage) --> DIB(img)
+    DI(shopPage) --> DIC(js)
+    DIC(js) --> DICA([shop.js])
+
+    D --> DA
+
+
+    EA(shop_page dummy):::hidden --> EB(templates)
+    EA(shop_page dummy):::hidden --> EC([__init__.py])
+    EA(shop_page dummy):::hidden --> ED([app.py])
+    EA(shop_page dummy):::hidden --> EE([views.py])
+    EB(templates) --> EF([shop.html])
+
+    E --> EA
+
+
+    FA(reg page dummy):::hidden --> FB(templates)
+    FA(reg page dummy):::hidden --> FC([__init__.py])
+    FA(reg page dummy):::hidden --> FD([app.py])
+    FA(reg page dummy):::hidden --> FE([views.py])
+    FB(templates) --> FF([reg.html])
+
+    F --> FA
+
+
+    GA(project dummy):::hidden --> GB(templates)
+    GA(project dummy):::hidden --> GC([__init__.py])
+    GA(project dummy):::hidden --> GD([login_manager.py])
+    GA(project dummy):::hidden --> GE([mail_config.py])
+    GA(project dummy):::hidden --> GF([settings.py])
+    GA(project dummy):::hidden --> GG([urls.py])
+    GB(templates) --> GH([base.html])
+
+    G --> GA
+
+
+    HA(home page dummy):::hidden --> HB(templates)
+    HA(home page dummy):::hidden --> HC([__init__.py])
+    HA(home page dummy):::hidden --> HD([app.py])
+    HA(home page dummy):::hidden --> HE([views.py])
+    HB(templates) --> HF([home.html])
+
+    H --> HA
+
+
+    IA(reg page dummy):::hidden --> IB(modules)
+    IA(reg page dummy):::hidden --> ID([main.py])
+    IB(modules) --> IC([__init__.py])
+    IB(modules) --> IE([callback_data.py])
+    IB(modules) --> IF([create_keyboard.py])
+    IB(modules) --> IG([data_base.py])
+    IB(modules) --> IH([start_bot.py])
+
+    I --> IA
+
+    JA(basket page dummy):::hidden --> JB(templates)
+    JA(basket page dummy):::hidden --> JC([__init__.py])
+    JA(basket page dummy):::hidden --> JD([app.py])
+    JA(basket page dummy):::hidden --> JE([views.py])
+    JB(templates) --> JF([basket.html])
+
+    J --> JA
+
+
+    KA(auth page dummy):::hidden --> KB(templates)
+    KA(auth page dummy):::hidden --> KC([__init__.py])
+    KA(auth page dummy):::hidden --> KD([app.py])
+    KA(auth page dummy):::hidden --> KE([views.py])
+    KB(templates) --> KF([auth.html])
+
+    K --> KA
+
+
+    LA(home page dummy):::hidden --> LB(templates)
+    LA(home page dummy):::hidden --> LC([__init__.py])
+    LA(home page dummy):::hidden --> LD([app.py])
+    LA(home page dummy):::hidden --> LE([views.py])
+    LB(templates) --> LF([admin.html])
+
+    L --> LA
+
+    PA(contact page dummy):::hidden --> PB(templates)
+    PA(contact page dummy):::hidden --> PD([__init.py__])
+    PA(contact page dummy):::hidden --> PE([app.py])
+    PA(contact page dummy):::hidden --> PG([views.py])
+    PB(templates) --> PC([contact.html])
+
+    P --> PA
+
+    classDef hidden display: none
+
+```
 
 ### Опис веб-сторінок:
 #### _**Registration**_ - сторінка на котрій користувач може зареєструватися.
@@ -349,9 +509,14 @@ class Cart(db.Model):
     
 ```
 #### Створюємо усі необхідні таблиці у вигляді класу для подальшого використання
-
+___
 ## Чому саме SQLite3?
+### База даних – це організована сукупність даних, структурованих таким чином, що вони можуть бути легко доступні, керовані та оновлювані. Вона дозволяє ефективно зберігати та обробляти великі об'єми інформації.
+___
 ### SQLite - це простий вбудований SQL-сервіс, який не вимагає окремого сервера. З ним доволі легко взаємодіяти безпосередньо з Python за допомогою модуля sqlite3. Саме ця база даних була нам більш зручною для використання у веб-додатку, а також у __Telegram-bot__, оскільки він підтримує SQL-запити Крім того, SQLite базу даних можна зберігати в одному файлі, що спрощує розгортання та роботу з нею. І важливо зазначити, що ми використовували бібліотеку flask_sqlalchemy для роботи з базами даних, через яку було дуже зручно налаштувати створення файлу і таблиць у базі даних. 
+___
+### Також у роботі з базою данних важливу роль відіграє саме ID. Це унікальний ідентифікатор для кожного запису в таблиці, що забезпечує унікальність даних і дозволяє легко знаходити, оновлювати та видаляти конкретні записи. Саме через нього й виконувались ці дії у нашому проєкті для зручності.
+___ 
 
 ## Шаблоны HTML
 ### Registration page:
