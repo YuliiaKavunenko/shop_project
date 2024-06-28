@@ -6,7 +6,7 @@
 >- [Іван Єжов](https://github.com/EzhovIvan)
 >- [Артем Мозговий](https://github.com/MozgoviyArtem)
 >- [Артем Криворучка](https://github.com/Artem653) 
->- [Іван Іванов]()
+>- [Іван Іванов](https://github.com/Ivanov-ivan123)
 
 ## Опис проєкту
 
