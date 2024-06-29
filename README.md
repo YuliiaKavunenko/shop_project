@@ -78,7 +78,7 @@ flask --app settings db upgrade
 5. > Готово!
 ### Для запуску _Telegram-bot_:
 1. > Перейдіть у папку бота `BotShop`
-2. > Перейдіть у файл `main.py` і запустіть його
+2. > Відкрийте термінал і запустіть файл `main.py` командою `python main.py`
 3. > Готово!
 ### Для запуску проєкту на віддаленому сервері (pythonanywhere):
 1. > Перейдіть за посиланням [PythonAnywhere](https://www.pythonanywhere.com/)
